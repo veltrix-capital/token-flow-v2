@@ -4,7 +4,7 @@ from polymorphic.models import PolymorphicModel
 
 # Business model
 class Business(models.Model):
-    token = models.CharField(max_length=255, unique=True)
+    token = models.CharField(max_length=255)
     reward_router = models.CharField(max_length=255)
     redeem_router = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
@@ -17,7 +17,6 @@ class Business(models.Model):
 class User(models.Model):
     address = models.CharField(max_length=255, unique=True)
     private_key = models.CharField(max_length=255)
-
 
 # Event models
 class Event(PolymorphicModel):
