@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from analytics.models import Business, User, Event, RewardEvent, RedeemEvent, TransferEvent, SwapEvent
 
 class Command(BaseCommand):
-    help = "Delete all records from Business and User models"
+    help = "Delete all records from Business, User and Event models"
 
     def handle(self, *args, **kwargs):
         business_count = Business.objects.count()
