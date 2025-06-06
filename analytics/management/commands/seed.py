@@ -29,6 +29,7 @@ class Command(BaseCommand):
 
         for item in businesses:
             business = Business.objects.create(
+                token=item["token"],
                 reward_router=item["rewardRouter"],
                 redeem_router=item["redeemRouter"],
                 owner=item["owner"],
