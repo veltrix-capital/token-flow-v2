@@ -24,6 +24,9 @@ class Command(BaseCommand):
         users = data.get('users', [])
         events = data.get('events', [])
 
+        business_address_to_id = {}
+        user_address_to_id = {}
+
         for item in businesses:
             business = Business.objects.create(
                 reward_router=item["rewardRouter"],
@@ -37,6 +40,7 @@ class Command(BaseCommand):
 
             if business:
                 self.stdout.write(self.style.SUCCESS(f"Created business: {business.brand}"))
+                business_address_to_id[item["owner"]] = business.id
 
         for item in users:
             user = User.objects.create(
@@ -46,6 +50,7 @@ class Command(BaseCommand):
 
             if user:
                 self.stdout.write(self.style.SUCCESS(f"Created user: {user.address}"))
+                user_address_to_id[item["address"]] = user.id
 
         for item in events:
             event_type = item.get('type', '').lower()
@@ -57,35 +62,35 @@ class Command(BaseCommand):
 
             if event_type == 'reward':
                 event = ModelClass.objects.create(
-                    business=item['business'],
-                    user=item['user'],
+                    business_id=business_address_to_id[item['business']],
+                    user_id=user_address_to_id[item['user']],
                     amount=item['amount'],
                     token=item['token']
                 )
             elif event_type == 'redeem':
                 event = ModelClass.objects.create(
-                    business=item['business'],
-                    user=item['user'],
+                    business_id=business_address_to_id[item['business']],
+                    user_id=user_address_to_id[item['user']],
                     amount=item['amount'],
                     token=item['token']
                 )
             elif event_type == 'transfer':
                 event = ModelClass.objects.create(
-                    business=item['business'],
+                    business_id=business_address_to_id[item['business']],
                     token=item['token'],
-                    from_address=item['from'],
-                    to_address=item['to'],
+                    from_user_id=user_address_to_id[item['from']],
+                    to_user_id=user_address_to_id[item['to']],
                     amount=item['amount']
                 )
             elif event_type == 'swap':
                 event = ModelClass.objects.create(
-                    from_user=item['fromUser'],
+                    from_user_id=user_address_to_id[item['fromUser']],
                     from_token=item['fromToken'],
-                    from_business=item['fromBusiness'],
+                    from_business_id=business_address_to_id[item['fromBusiness']],
                     from_amount=item['fromAmount'],
-                    to_user=item['toUser'],
+                    to_user_id=user_address_to_id[item['toUser']],
                     to_token=item['toToken'],
-                    to_business=item['toBusiness'],
+                    to_business_id=business_address_to_id[item['toBusiness']],
                     to_amount=item['toAmount']
                 )
 

@@ -44,7 +44,7 @@ class RedeemEventAdmin(PolymorphicChildModelAdmin):
 class TransferEventAdmin(PolymorphicChildModelAdmin):
     base_model = TransferEvent
     show_in_index = True
-    list_display = ('id', 'business', 'from_address', 'to_address', 'amount', 'created_at')
+    list_display = ('id', 'business', 'from_user', 'to_user', 'amount', 'created_at')
 
 
 @admin.register(SwapEvent)
