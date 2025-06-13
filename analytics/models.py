@@ -29,6 +29,10 @@ class User(models.Model):
 class Event(PolymorphicModel):
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def type(self):
+        return self.__class__.__name__
+
     def __str__(self):
         return f"{self.__class__.__name__} at {self.created_at}"
 

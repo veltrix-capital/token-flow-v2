@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from .models import (
     Business, User,
-    Event, RewardEvent, RedeemEvent,
+    RewardEvent, RedeemEvent,
     TransferEvent, SwapEvent
 )
 
@@ -48,12 +48,24 @@ class SwapEventSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.Serializer):
     def to_representation(self, instance):
         if isinstance(instance, RewardEvent):
-            return RewardEventSerializer(instance).data
+            return {
+                **RewardEventSerializer(instance).data,
+                'type': instance.type
+            }
         elif isinstance(instance, RedeemEvent):
-            return RedeemEventSerializer(instance).data
+            return {
+                **RedeemEventSerializer(instance).data,
+                'type': instance.type
+            }
         elif isinstance(instance, TransferEvent):
-            return TransferEventSerializer(instance).data
+            return {
+                **TransferEventSerializer(instance).data,
+                'type': instance.type
+            }
         elif isinstance(instance, SwapEvent):
-            return SwapEventSerializer(instance).data
+            return {
+                **SwapEventSerializer(instance).data,
+                'type': instance.type
+            }
         else:
             return super().to_representation(instance)
