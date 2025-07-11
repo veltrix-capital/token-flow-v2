@@ -1,7 +1,7 @@
-asgiref==3.9.1
-Django==5.2.4
-django-polymorphic==4.1.0
-djangorestframework==3.16.0
+asgiref
+Django
+django-polymorphic
+djangorestframework
 graphnetworkx @ git+https://github.com/veltrix-capital/graphnetworkx.git@6e1a3a28914e0c0b9eaaef3624109f8a02b564f0
-sqlparse==0.5.3
-tzdata==2025.2
+sqlparse
+tzdata

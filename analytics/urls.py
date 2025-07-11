@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import UserListView, BusinessListView, EventListView
+from .views import UserViewSet, BusinessViewSet, EventViewSet
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path('users/', UserListView.as_view(), name='api-users'),
-    path('businesses/', BusinessListView.as_view(), name='api-businesses'),
-    path('events/', EventListView.as_view(), name='api-events'),
-]
+router = DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'businesses', BusinessViewSet, basename='business')
+router.register(r'events', EventViewSet, basename='event')
+
+urlpatterns = router.urls

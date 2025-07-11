@@ -49,23 +49,22 @@ class EventSerializer(serializers.Serializer):
     def to_representation(self, instance):
         if isinstance(instance, RewardEvent):
             return {
-                **RewardEventSerializer(instance).data,
+                **RewardEventSerializer(instance=instance).data,
                 'type': instance.type
             }
         elif isinstance(instance, RedeemEvent):
             return {
-                **RedeemEventSerializer(instance).data,
+                **RedeemEventSerializer(instance=instance).data,
                 'type': instance.type
             }
         elif isinstance(instance, TransferEvent):
             return {
-                **TransferEventSerializer(instance).data,
+                **TransferEventSerializer(instance=instance).data,
                 'type': instance.type
             }
         elif isinstance(instance, SwapEvent):
             return {
-                **SwapEventSerializer(instance).data,
+                **SwapEventSerializer(instance=instance).data,
                 'type': instance.type
             }
-        else:
-            return super().to_representation(instance)
+        return super().to_representation(instance)
